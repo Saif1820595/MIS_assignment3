@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+      
+    />
+    <title>Covid-19</title>
+  </head>
+  <body>
+    <h1 id="head" style="text-align: center">Covid19 Tracker</h1>
+    <form id="myForm">
+      <input type="text" id="country" placeholder="country name" required autocomplete="off"/>
+      <input type="submit" value="Get Data" />
+    </form>
+    <h1 id="confirmed"></h1>
+    <h1 id="recovered"></h1>
+    <h1 id="deaths"></h1>
+    <button id="more" style="text-align: center" class="btn btn-primary">
+      more details
+    </button>
+    <p style="display: none" id="moreDetails"></p>
+    <p style="display: none" id="moreDetailsPop"></p>
+    <img
+      style="display: none; height: 100px;"
+      id="flag"
+      src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/1200px-IMG_Academy_Logo.svg.png"
+      alt=""
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var mButton = document.getElementById("more");
+      var population = document.getElementById("moreDetailsPop");
+      var myForm = document.getElementById("myForm");
+      var flag = document.getElementById("flag");
+      var paragraph = document.getElementById("moreDetails");
+      myForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var country = document.querySelector("#country").value;
+        //fetch
+        var url = "https://api.covid19api.com/dayone/country/" + country;
+        var urlD = "https://restcountries.com/v3.1/name/" + country;
+        console.log(urlD);
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            var length = res.length;
+            var index = length - 1;
+            var moreD = document.getElementById("more-details");
+            var confirmed = document.getElementById("confirmed");
+            var recovered = document.getElementById("recovered");
+            var deaths = document.getElementById("deaths");
+            confirmed.innerHTML = "";
+            recovered.innerHTML = "";
+            deaths.innerHTML = "";
+            confirmed.append("Total Confirmed: " + res[index].Confirmed);
+            recovered.append("Total Recovered: " + res[index].Recovered);
+            deaths.append("Total Deaths: " + res[index].Deaths);
+          });
+
+        fetch(urlD)
+          .then((res) => res.json())
+          .then((data) => {
+            paragraph.innerHTML = "";
+            population.innerHTML = "";
+            flag.attributes = "";
+            paragraph.textContent = "Capital: " + data[0].capital;
+            population.textContent = "Population: " + data[0].population;
+            flag.src = data[0].flags.png;
+            console.log(data[0]);
+          });
+      });
+      mButton.addEventListener("click", (event) => {
+        paragraph.style.display = "block";
+        population.style.display = "block";
+        flag.style.display = "block";
+      });
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam:wght@400;500;600;700&display=swap');
+*
+#head {
+    background-color: #a5ce62;
+    padding: 20px;
+    text-align: center;
+  }
+#country{
+    background: #b9bcbe;
+    position: relative;
+}
+#confirmed{
+    background: #b9b9b9;
+    position: relative;
+    width: 33%;
+}
+#recovered{
+    background: #55c868;
+    position: relative;
+    width: 33%;
+}
+#deaths{
+    background: #d75d5d;
+    position: relative;
+    width: 33%;
+}
